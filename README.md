@@ -15,3 +15,15 @@ ghissue will read from stdin to create issues on Github.com. <repo name> is a sh
 
 The output from a successful command will be the URL to the issue.
 
+## Example
+
+```
+// TODO halfwit: test test
+// test test test test
+// test test test test
+
+```
+
+Select this range of text with your favorite editor, and pipe it through ghissue:
+
+`<cmd> | ghissue -t 'testing ghissue' halfwit/ghissue`
