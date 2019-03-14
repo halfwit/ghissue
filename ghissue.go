@@ -15,7 +15,6 @@ import (
 var (
 	branch = flag.String("b", "master", "Github branch")
 	title = flag.String("t", "", "Title of the issue")
-	username = flag.String("u", "", "Github username")
 )
 
 func flagFatal() {
@@ -28,7 +27,7 @@ func main() {
 	if flag.Lookup("-h") != nil {
 		flagFatal()
 	}
-	if len(os.Args) < 2 {
+	if flag.NArg() != 1 {
 		log.Fatal("No reponame specified")
 	}
 	if *title == "" { 
@@ -38,9 +37,6 @@ func main() {
 	token, err := libauth.Getuserpasswd("proto=pass service=github role=client user=%s", usr.Username)
 	if err != nil {
 		log.Fatal(err)
-	}
-	if *username == "" {
-		*username = usr.Username
 	}
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(&oauth2.Token{

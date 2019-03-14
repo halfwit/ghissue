@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"encoding/csv"
+	"flag"
 	"fmt"
 	"log"
 	"regexp"
@@ -81,7 +82,11 @@ func createIssue(ctx context.Context, is *github.IssuesService) {
 		Labels: &labels,
 		Assignees: &assignees,
 	}
-	issue, _, err := is.Create(ctx, *username, os.Args[1], ir)
+	items := strings.Split(flag.Arg(0), "/")
+	if len(items) != 2 {
+		log.Fatal("Not a repository name. Use syntax githubuser/reponame")
+	}
+	issue, _, err := is.Create(ctx, items[0], items[1], ir)
 	if err != nil {
 		log.Fatal(err)
 	}
