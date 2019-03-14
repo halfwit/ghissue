@@ -93,7 +93,7 @@ func createIssue(ctx context.Context, is *github.IssuesService) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(issue.GetURL())
+	fmt.Println(issue.GetHTMLURL())
 }
 
 // Just let the library do all the lifting
