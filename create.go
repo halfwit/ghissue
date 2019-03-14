@@ -59,6 +59,7 @@ func createIssue(ctx context.Context, is *github.IssuesService) {
 		if len(assignees) > 0 {
 			size = len(t.FindString(input))
 		} else {
+			assignees = append(assignees, "")
 			size = len(bug.FindString(input))
 		}
 		input = input[size + 1:]
@@ -80,7 +81,9 @@ func createIssue(ctx context.Context, is *github.IssuesService) {
 		Title: title,
 		Body: &input,
 		Labels: &labels,
-		Assignees: &assignees,
+	}
+	if len(assignees) > 0 {
+		ir.Assignees = &assignees
 	}
 	items := strings.Split(flag.Arg(0), "/")
 	if len(items) != 2 {
