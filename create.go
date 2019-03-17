@@ -18,7 +18,6 @@ var (
 	todo = regexp.MustCompile("TODO.*:")
 	bug  = regexp.MustCompile("BUG.*:")
 	ver  = regexp.MustCompile(`(v[0-9]\.[0-9]\.[0-9])`)
-	assign = `\s+((?:[^,\s]*(?:,\s)?)*)`
 )
 
 func createIssue(ctx context.Context, is *github.IssuesService) {
@@ -34,7 +33,7 @@ func createIssue(ctx context.Context, is *github.IssuesService) {
 	switch {
 	case todo.MatchString(input):
 		labels = append(labels, "todo")
-		t := regexp.MustCompile("TODO" + assign + ":")
+		t := regexp.MustCompile(`TODO\(([^,\s]+)\)`)
 		h := t.FindStringSubmatch(input)
 		if len(h) > 0 {
 			c := csv.NewReader(strings.NewReader(h[1]))
